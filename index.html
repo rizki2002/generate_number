@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Generator</title>
+</head>
+<body>
+    <h1>Number Generator</h1>
+    <input type="number" id="inputNumber" placeholder="Masukan Angka">
+    <button onclick="generate('segitiga')">Generate Segitiga</button>
+    <button onclick="generate('ganjil')">Generate Bilangan Ganjil</button>
+    <button onclick="generate('prima')">Generate Bilangan Prima</button>
+    <div id="result"></div>
+
+    <script>
+        function generate(type) {
+            const number = document.getElementById('inputNumber').value;
+            fetch('/generate-' + type, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({number: number})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = 'Result: ' + data.join(', ');
+            });
+        }
+    </script>
+</body>
+</html>
